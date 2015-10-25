@@ -22,6 +22,33 @@ namespace EverRPG {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// timer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.Timer timer;
+        
+        /// <summary>
+        /// sManager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager sManager;
+        
+        /// <summary>
+        /// upHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upHeader;
+        
+        /// <summary>
         /// lblHeader control.
         /// </summary>
         /// <remarks>
@@ -67,6 +94,15 @@ namespace EverRPG {
         protected global::System.Web.UI.WebControls.Label lblMainHeader;
         
         /// <summary>
+        /// upMain control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upMain;
+        
+        /// <summary>
         /// lblMain control.
         /// </summary>
         /// <remarks>
@@ -110,6 +146,15 @@ namespace EverRPG {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMenu2;
+        
+        /// <summary>
+        /// upFooter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upFooter;
         
         /// <summary>
         /// lblFooter control.

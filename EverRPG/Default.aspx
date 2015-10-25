@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="EverRPG.Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="EverRPG.Default" ClientIDMode="AutoID" %>
 
 <!DOCTYPE html>
 
@@ -159,9 +159,21 @@ wide screen
 <body>
     <form id="form1" runat="server">
     <body>
-		<div class="sample5">
+        <asp:Timer ID="timer" runat="server" OnTick="timer_Tick" Interval="1000" ClientIDMode="AutoID"></asp:Timer>		
+        <asp:ScriptManager ID="sManager" runat="server" ClientIDMode="AutoID">
+        </asp:ScriptManager>
+        <div class="container">
 			<div class="header">
-				<h1><asp:Label ID="lblHeader" runat="server"></asp:Label></h1>
+				<h1>
+                    <asp:UpdatePanel ID="upHeader" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <asp:Label ID="lblHeader" runat="server"></asp:Label>
+                        </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="timer" EventName="Tick" />
+                        </Triggers>
+                    </asp:UpdatePanel>
+                </h1>
 			</div>
 			<div class="nav-bar">
 				<ul class="nav">
@@ -174,7 +186,15 @@ wide screen
                 
 				<div class="col1">
 					<h2><asp:Label ID="lblMainHeader" runat="server"></asp:Label></h2>
-					<asp:Label ID="lblMain" runat="server"></asp:Label>
+                    <asp:UpdatePanel ID="upMain" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <asp:Label ID="lblMain" runat="server"></asp:Label>
+                        </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="timer" EventName="Tick" />
+                        </Triggers>
+                    </asp:UpdatePanel>
+
 				</div>
 				<div class="col2">
 					<h3><asp:Label ID="lblMenu1Header" runat="server"></asp:Label></h3>
@@ -186,7 +206,14 @@ wide screen
 				</div>
 			</div>
 			<div class="footer">
-				<asp:Label ID="lblFooter" runat="server"></asp:Label>
+                    <asp:UpdatePanel ID="upFooter" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <asp:Label ID="lblFooter" runat="server"></asp:Label>
+                        </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="timer" EventName="Tick" />
+                        </Triggers>
+                    </asp:UpdatePanel>
 			</div>
 		</div>
 	</body>
