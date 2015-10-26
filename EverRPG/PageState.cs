@@ -5,9 +5,16 @@ namespace EverRPG
 {
     public class PageState
     {
+        PlayerSession playersession;
+
+        public PageState(PlayerSession playersession)
+        {
+            this.playersession = playersession;
+        }
+
         internal String GetHeader()
         {
-            return "EverRPG";
+            return "Alpha";
         }
 
         internal String GetFooter()
@@ -17,7 +24,11 @@ namespace EverRPG
 
         internal String GetMain()
         {
-            return "You are in a room";
+            String frametext = "";
+
+            frametext = "You are in " + playersession.GetPlayerState().GetLocation().GetName();
+
+            return frametext;
         }
     }
 }
