@@ -26,7 +26,10 @@ namespace EverRPG
         {
             String frametext = "";
 
-            frametext = "You are in " + playersession.GetPlayerState().GetLocation().GetName();
+            String glocation = "<p>You are in " + playersession.GetPlayerState().GetLocation().GetName()+ "</p>";
+            String guid = "<p>Gui: " + playersession.GetPlayerState().GetPlayerSessionGuid() + "</p>";
+
+            frametext += glocation + guid;
 
             return frametext;
         }

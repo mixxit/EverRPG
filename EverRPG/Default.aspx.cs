@@ -10,14 +10,12 @@ namespace EverRPG
 {
     public partial class Default : System.Web.UI.Page
     {
-        private Guid sessionguid;
-
         private PlayerSession GetSession()
         {
-            PlayerSession session = World.Instance.GetPlayerSession(sessionguid);
-            if (sessionguid == Guid.Empty)
+            PlayerSession session = World.Instance.GetPlayerSession(new Guid(ViewState["sessionguid"].ToString()));
+            if (new Guid(ViewState["sessionguid"].ToString()) == Guid.Empty)
             {
-                sessionguid = session.guid;
+                ViewState["sessionguid"] = session.guid.ToString();
             }
             return session;
         }
@@ -30,7 +28,7 @@ namespace EverRPG
         private void UpdatePage(PageState pagestate)
         {
             lblHeader.Text = pagestate.GetHeader();
-            lblFooter.Text = pagestate.GetFooter();
+            lblFooter.Text = ViewState["sessionguid"].ToString();
             lblMain.Text = pagestate.GetMain();
         }
 

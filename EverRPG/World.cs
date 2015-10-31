@@ -12,8 +12,19 @@ namespace EverRPG
         private List<PlayerSession> playersessions = new List<PlayerSession>();
         private List<PlayerState> playerstates = new List<PlayerState>();
         private List<Location> locations  = new List<Location>();
+        private List<String> locationtypes = new List<String>();
 
-        private World() { }
+        private World()
+        {
+            locationtypes.Add("Cave");
+            locationtypes.Add("Riverbed");
+            locationtypes.Add("Plain");
+            locationtypes.Add("Lakeside");
+            locationtypes.Add("Forest");
+            locationtypes.Add("Jungle");
+            locationtypes.Add("Desert");
+
+        }
 
         public static World Instance
         {
@@ -56,6 +67,7 @@ namespace EverRPG
             return World.Instance.playerstates.Where(ps => ps.GetPlayerSessionGuid() == sessionguid).FirstOrDefault();
         }
 
+        /*
         public Location GetRandomLocation()
         {
             if (World.Instance.locations.Count < 1)
@@ -64,25 +76,96 @@ namespace EverRPG
                 World.Instance.AddLocation(World.Instance.GenerateRandomLocation());
             }
 
-            var rand = new Random();
-            return World.Instance.locations[rand.Next(World.Instance.locations.Count)];
-        }
+        }*/
 
         public void AddLocation(Location location)
         {
             World.Instance.locations.Add(location);
         }
 
+        public List<Location> GetLocations()
+        {
+            return World.Instance.locations;
+        }
+
+        
+        public Location GetFreeLocation()
+        {
+            Location newlocation = null;
+
+            // If no locations return 0,0
+            if (World.Instance.GetLocations().Count == 0)
+            {
+                Position position = new Position(0, 0);
+                newlocation = new Location(World.Instance, position, World.Instance.ChooseRandomLocationType());
+                World.Instance.AddLocation(newlocation);
+            } else
+            {
+                List<Location> tmpLocations = new List<Location>(World.Instance.GetLocations());
+
+                foreach (Location location in tmpLocations)
+                {
+                    Position foundemptyposition = World.Instance.GetFreePositionNextToLocation(location);
+
+                    if (foundemptyposition != null)
+                    {
+                        Position position = new Position(foundemptyposition.GetX(), foundemptyposition.GetY());
+                        newlocation = new Location(World.Instance, position, World.Instance.ChooseRandomLocationType());
+                        World.Instance.AddLocation(newlocation);
+                        continue;
+                    }
+                }
+            }
+
+            return newlocation;
+        }
+        
+
+        public Position GetFreePositionNextToLocation(Location fromlocation)
+        {
+            Position foundposition = null;
+            for (int x = -1; x <= 1; x++)
+            {
+                for (int y = -1; y <= 1; y++)
+                {
+                    int checkx = fromlocation.GetPosition().GetX() + x;
+                    int checky = fromlocation.GetPosition().GetY() + y;
+                    Location location = World.Instance.GetLocations().Where(l => l.GetPosition().GetX() == checkx && l.GetPosition().GetY() == checky ).FirstOrDefault();
+                    if (location == null)
+                    {
+                        foundposition = new Position(checkx, checky);
+                    }
+
+                    continue;
+                }
+
+                if (foundposition == null)
+                {
+                    continue;
+                }
+            }
+
+            return foundposition;
+        }
+
+        public String ChooseRandomLocationType()
+        {
+
+            var rand = new Random();
+            return World.Instance.locationtypes[rand.Next(World.Instance.locationtypes.Count)];
+
+        }
+
         public Location GenerateRandomLocation()
         {
             Position position = new Position(0, 0);
-            Location location = new Location(World.Instance, position, "Cave");
+            Location location = new Location(World.Instance, position, World.Instance.ChooseRandomLocationType());
             return location;
         }
 
         public PlayerState LoadPlayerState(Guid guid)
         {
-            Location location = World.Instance.GetRandomLocation();
+            Location location = World.Instance.GetFreeLocation();
             PlayerState playerstate = new PlayerState(guid, location);
             World.Instance.playerstates.Add(playerstate);
 
